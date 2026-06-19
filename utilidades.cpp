@@ -12,15 +12,24 @@
 #include "pdf.h"
 using namespace std;
 
+
+//Proposito: Pausa el flujo de ejecución en la consola de comandos de Windows.
+//Parametro: Ninguno.
+//Retorno: Ninguno.
 void pausa(){
 	system("pause");
 }
 
+//Proposito: Limpia por completo la pantalla de la consola de comandos.
+//Parametro: Ninguno.
+//Retorno: Ninguno.
 void limpiar(){
 	system("cls");
 }
 
-//===Introduccion del Proyecto===
+//Proposito: Despliega la carátula formal con los datos del grupo y la asignatura.
+//Parametro: Ninguno.
+//Retorno: Ninguno.
 void mostrarIntroduccion(){ 
     cout << "----------------------------------------------------------------------" << endl;
     cout << "                 Asignatura: Programacion I (SIS-112)                 " << endl;
@@ -40,7 +49,9 @@ void mostrarIntroduccion(){
     cin.get(); 
 }
 
-//===Menu Principal===
+//Proposito: Imprime en pantalla las opciones numéricas del menú principal.
+//Parametro: Ninguno.
+//Retorno: Ninguno.
 void mostrarMenu(){
 	cout << "\n=========================================" << endl;
     cout << "             MENU PRINCIPAL             " << endl;
@@ -51,39 +62,47 @@ void mostrarMenu(){
     cout << "4. Eliminar cliente" << endl;
     cout << "5. Ordenar por fecha de entrega" << endl;
     cout << "6. Buscar cliente" << endl;
-    cout << "7. Intercalar clientes" << endl;
-    cout << "8. Exportar reporte a PDF" << endl;
-    cout << "9. Salir" << endl;
+    cout << "7. Busqueda secuencial" << endl;
+    cout << "8. Intercalar clientes" << endl;
+    cout << "9. Exportar reporte a PDF" << endl;
+    cout << "10. Salir" << endl;
     cout << "=========================================" << endl;
     
     cout << "Seleccione una opcion: ";
 }
 
+//Proposito: Despliega de forma gráfica y comparativa la eficiencia de las búsquedas.
+//Parametro: compIterativa/compBinaria - Comparaciones, encIterativa - Éxito lineal, llamadasBinaria - Recursión, posBinaria - Celda hallada.
+//Retorno: Ninguno.
 void imprimirReporteEficienciaBusqueda(int compIterativa, bool encIterativa, int compBinaria, int llamadasBinaria, int posBinaria) {
     cout << "\n======================================================" << endl;
-    cout << "               REPORTE DE EFICIENCIA                  " << endl;
+    cout << "        ESTADISTICAS DE RENDIMIENTO (BUSQUEDA)        " << endl;
     cout << "======================================================" << endl;
-    cout << " Busqueda secuencial (Iterativa):\n";
-    cout << "   Comparaciones efectuadas: " << compIterativa << endl;
-    cout << "   Resultado de operacion:   " << (encIterativa ? "Encontrado" : "No encontrado") << endl;
-    cout << "\n Busqueda binaria (Recursiva):\n";
-    cout << "   Comparaciones efectuadas: " << compBinaria << endl;
-    cout << "   Llamadas recursivas:      " << llamadasBinaria << endl;
-    cout << "   Resultado de operacion:   " << (posBinaria != -1 ? "Encontrado" : "No encontrado") << endl;
+    cout << " [1] BUSQUEDA SECUENCIAL (ITERATIVA):" << endl;
+    cout << "     - Comparaciones realizadas: " << compIterativa << endl;
+    cout << "     - Estado: " << (encIterativa ? "Cliente Encontrado" : "No Encontrado") << endl;
     cout << "------------------------------------------------------" << endl;
+    cout << " [2] BUSQUEDA BINARIA (RECURSIVA):" << endl;
+    cout << "     - Comparaciones realizadas: " << compBinaria << endl;
+    cout << "     - Llamadas recursivas:      " << llamadasBinaria << endl;
+    cout << "     - Estado: " << (posBinaria != -1 ? "Cliente Encontrado" : "No Encontrado") << endl;
+    cout << "======================================================" << endl;
     
-    cout << " Conclusion: ";
-    if (compIterativa < compBinaria) {
-        cout << "La Busqueda Secuencial fue mas eficiente para este caso.\n";
-    } else if (compIterativa > compBinaria) {
-        cout << "La Busqueda Binaria fue mas eficiente para este caso.\n";
-    } else {
-        cout << "Ambos metodos requirieron la misma cantidad de comparaciones.\n";
+    // Solo muestra la conclusión si el método que se eligió logró encontrar al cliente
+    if (encIterativa || posBinaria != -1) {
+        cout << " -> GANADOR POR EFICIENCIA EN ESTA OPERACION: ";
+        if (posBinaria != -1) {
+            cout << "Busqueda Binaria (Menor numero de evaluaciones gracias a la recursion)" << endl;
+        } else {
+            cout << "Busqueda Secuencial Iterativa" << endl;
+        }
     }
-    cout << "======================================================\n" << endl;
+    cout << "======================================================" << endl;
 }
 
-//Imprime los resultados del ordenamiento Burbuja
+//Proposito: Imprime los resultados estadísticos del ordenamiento Burbuja.
+//Parametro: rep - Estructura ReporteOrdenacion con las métricas de control.
+//Retorno: Ninguno.
 void imprimirReporteBurbuja(const ReporteOrdenacion &rep) {
     cout << "\n======================================================" << endl;
     cout << "      ESTADISTICAS: BUBBLE SORT OPTIMIZADO            " << endl;
@@ -93,7 +112,9 @@ void imprimirReporteBurbuja(const ReporteOrdenacion &rep) {
     cout << "------------------------------------------------------" << endl;
 }
 
-//Imprime los resultados de la Intercalación
+//Proposito: Imprime los resultados estadísticos del proceso de Intercalación.
+//Parametro: rep - Estructura ReporteIntercalacion con las métricas de control.
+//Retorno: Ninguno.
 void imprimirReporteIntercalacion(const ReporteIntercalacion &rep) {
     cout << "\n======================================================" << endl;
     cout << "      ESTADISTICAS: METODO DE INTERCALACION           " << endl;
@@ -103,32 +124,35 @@ void imprimirReporteIntercalacion(const ReporteIntercalacion &rep) {
     cout << "------------------------------------------------------" << endl;
 }
 
+//Proposito: Controla el flujo principal del programa, interactuando con los vectores y archivos.
+//Parametro: Ninguno.
+//Retorno: Ninguno.
 void opcionesMenu(){
 	vector<Corporacion> corporaciones;
 
     //Cargamos los clientes desde el archivo
     cargarCorporacion("clientes.csv", corporaciones);
     if(corporaciones.empty()){
-		corporaciones = {
-	    	{1, "Coca Cola", "Digital", true, 2, 2000, "CC100"},
-	    	{2, "Pepsi", "Analogica", false, 1, 2000, "PP200"},
-	    	{3, "Nestle", "Digital", true, 3, 6000, "NS300"},
-	    	{4, "Zara", "Analogica", false, 0, 3000, "ZR400"},
-	    	{5, "Samsung", "Digital", true, 4, 8000, "SM500"},
-		    {6, "Apple", "Digital", true, 2, 9000, "AP600"},
-		    {7, "Microsoft", "Digital", false, 5, 8500, "MS700"},
-		    {8, "Google", "Digital", true, 1, 9500, "GG800"},
-		    {9, "Amazon", "Analogica", false, 2, 7000, "AM900"},
-		    {10, "Tesla", "Digital", true, 0, 7500, "TS1000"}
-		};
-	}
+    corporaciones = {
+        {1, "Coca Cola", "Digital", true, 2, 2000, "CC100", "20260115"},
+        {2, "Pepsi", "Analogica", false, 1, 2000, "PP200", "20260220"},
+        {3, "Nestle", "Digital", true, 3, 6000, "NS300", "20260310"},
+        {4, "Zara", "Analogica", false, 0, 3000, "ZR400", "20260405"},
+        {5, "Samsung", "Digital", true, 4, 8000, "SM500", "20260425"},
+        {6, "Apple", "Digital", true, 2, 9000, "AP600", "20260512"},
+        {7, "Microsoft", "Digital", false, 5, 8500, "MS700", "20260530"},
+        {8, "Google", "Digital", true, 1, 9500, "GG800", "20260602"},
+        {9, "Amazon", "Analogica", false, 2, 7000, "AM900", "20260614"},
+        {10, "Tesla", "Digital", true, 0, 7500, "TS1000", "20260618"}
+    };
+}
 
 // Genera o sincroniza archivos iniciales por si ya existen datos en clientes.csv
     separarYGuardarPorEstado(corporaciones);
     
-    ReporteOrdenacion historialBurbuja = {0, 0};
-    ReporteIntercalacion historialIntercalacion = {0, 0};
-    bool ejecucionAnalisis = false;
+    ReporteOrdenacion historialBurbuja = {0, 0}; // Estructura de métricas burbuja
+    ReporteIntercalacion historialIntercalacion = {0, 0}; // Estructura de métricas intercalación
+    bool ejecucionAnalisis = false; // Para saber si se corrieron algoritmos
     
     int opcion;
     do {
@@ -142,7 +166,7 @@ void opcionesMenu(){
         case 1:
             crearCorporacion(corporaciones);
             guardarCorporacion("clientes.csv", corporaciones);
-    		separarYGuardarPorEstado(corporaciones);
+    		separarYGuardarPorEstado(corporaciones); // Genera finalizado.csv y pendiente.csv
             pausa();
 			break;
             
@@ -190,78 +214,115 @@ void opcionesMenu(){
 
         //===Busqueda Binaria===
         case 6: {
-			int seleccion=seleccionarTipoBusqueda();
-			int comparacionBinaria=0;
-			int comparacionIterativa=0;
-			int llamada,posicion;
-			bool posicion2;
+            limpiar();
+            int seleccion = seleccionarTipoBusqueda(); // 1. Binaria, 2. Secuencial
+            int estadoProyecto = seleccionarEstadoProyecto(); // 1. Finalizados, 2. Pendientes
+            
+            vector<Corporacion> tempBusqueda;
+            if (estadoProyecto == 1) {
+                cargarCorporacion("finalizado.csv", tempBusqueda);
+            } else {
+                cargarCorporacion("pendiente.csv", tempBusqueda);
+            }
+
+            if(tempBusqueda.empty()) {
+                cout << "\n[!] No hay registros en la categoria seleccionada.\n";
+                pausa();
+                limpiar();
+                break;
+            }
+
+            // Limpiamos el buffer antes de capturar la cadena de texto
+            cin.ignore(); 
+            string codigoBuscado;
+            cout << "\nIngrese el codigo alfanumerico del cliente a buscar (Ej. CC100): ";
+            getline(cin, codigoBuscado);
+
+            // Inicializamos todas las variables para evitar basura de memoria
+            int compBinaria = 0;
+            int compIterativa = 0;
+            int llamadasBinaria = 0;
+            int posBinaria = -1;
+            bool encIterativa = false;
+            Corporacion c;
+
+            // === EJECUCIÓN CONDICIONAL SEGÚN LA SELECCIÓN ===
+            if (seleccion == 1) {
+                // Obligatorio ordenar por CÓDIGO antes de la búsqueda binaria
+                ordenarPorCodigoParaBusqueda(tempBusqueda);
+                posBinaria = busquedaBinariaCorporacion(tempBusqueda, 0, tempBusqueda.size() - 1, codigoBuscado, compBinaria, llamadasBinaria);
+                
+                if(posBinaria != -1) {
+                    cout << "\n======================================================" << endl;
+                    cout << "===       CLIENTE ENCONTRADO (BUSQUEDA BINARIA)    ===" << endl;
+                    cout << "======================================================" << endl;
+                    mostrarCorporacion(tempBusqueda[posBinaria]);
+                } else {
+                    cout << "\n[!] Cliente no encontrado en esta seccion.\n";
+                }
+            }
+            else {
+                // Búsqueda Secuencial Iterativa
+                encIterativa = buscarClientePorCodigo(codigoBuscado, tempBusqueda, c, compIterativa);
+                
+                if(encIterativa) {
+                    cout << "\n======================================================" << endl;
+                    cout << "===     CLIENTE ENCONTRADO (BUSQUEDA ITERATIVA)    ===" << endl;
+                    cout << "======================================================" << endl;
+                    mostrarCorporacion(c); // Muestra el cliente guardado en 'c'
+                } else {
+                    cout << "\n[!] Cliente no encontrado en esta seccion.\n";
+                }
+            }
+            
+            pausa();
+            limpiar();
+
+            // === LLAMADO A LA FUNCIÓN DE INFORME DE RENDIMIENTO ===
+            // Pasamos todas las variables requeridas por el prototipo de utilidades.h
+            imprimirReporteEficienciaBusqueda(compIterativa, encIterativa, compBinaria, llamadasBinaria, posBinaria);
+            
+            pausa();
+            limpiar();
+            break;
+        }
+        //===Busqueda secuencial==
+        case 7: {
 			Corporacion c;
 			int estadoProyecto = seleccionarEstadoProyecto(); // Pregunta al usuario usando vectores.h
-	        vector<Corporacion> tempBusqueda;
-	            
-	        if (estadoProyecto == 1) {
-	            cargarCorporacion("finalizado.csv", tempBusqueda);
-	        } else {
-	            cargarCorporacion("pendiente.csv", tempBusqueda);
-	        }
-	
-	        if(tempBusqueda.empty()) {
-	            cout << "\nNo hay registros en la categoria seleccionada.\n";
-	            pausa();
-	        }
-	
-	        //Se hace el ordenamiento antes de la busqueda binaria
-	        ordenarVector(tempBusqueda);
-	            
-	        string codigoBuscado;
-	        cout << "\nIngrese el codigo alfanumerico del cliente a buscar: ";
-	        getline(cin,codigoBuscado);
-	
-	        // Ejecución de búsqueda pasando el codigo alfanumerico
-	        posicion2 = buscarClientePorCodigo(codigoBuscado, tempBusqueda, c, comparacionIterativa);
-			posicion = busquedaBinariaCorporacion(tempBusqueda, 0, tempBusqueda.size()-1, codigoBuscado, comparacionBinaria, llamada);
-			if(seleccion==1){
-				if(posicion != -1) {
-	            cout << "\n===CLIENTE ENCONTRADO===" << endl;
-	            mostrarCorporacion(tempBusqueda[posicion]);
-	        	} else {
-	            cout << "\nCliente no encontrado en esta seccion.\n";
-	            pausa();
-	        	}
-			}
-			else{
-				if(posicion2 != false) {
-	            cout << "\n===CLIENTE ENCONTRADO===" << endl;
-	            mostrarCorporacion(tempBusqueda[posicion]);
-	        	} else {
-	            cout << "\nCliente no encontrado en esta seccion.\n";
-	            pausa();
-	        	}
-			}
-			pausa();
-			limpiar();
-			cout << "\n=== REPORTE DE EFICIENCIA ===\n";
-			cout << "Busqueda iterativa:\n";
-			cout << "   Comparaciones: " << comparacionIterativa << endl;
-			cout << "   Resultado: " << (posicion != -1 ? "Encontrado" : "No encontrado") << endl;
-			cout << "\nBusqueda binaria recursiva:\n";
-			cout << "   Comparaciones: " << comparacionBinaria << endl;
-			cout << "   Llamadas: " << llamada << endl;
-			cout << "   Resultado: " << (posicion2 != true ? "Encontrado" : "No encontrado") << endl;
-			cout << "\nConclusion: ";
-			if (comparacionIterativa < comparacionBinaria) {
-			    cout << "Iterativa fue mas eficiente en comparaciones.\n";
-			} else if (comparacionIterativa > comparacionBinaria) {
-			    cout << "Busqueda Binaria fue mas eficiente en comparaciones.\n";
-			} else {
-			    cout << "Ambas tuvieron la misma eficiencia en comparaciones.\n";
-			}
-			pausa();
+            vector<Corporacion> tempBusqueda;
+            
+            if (estadoProyecto == 1) {
+                cargarCorporacion("finalizado.csv", tempBusqueda);
+            } else {
+                cargarCorporacion("pendiente.csv", tempBusqueda);
+            }
+
+            if(tempBusqueda.empty()) {
+                cout << "\nNo hay registros en la categoria seleccionada.\n";
+                pausa();
+				break;
+            }
+
+            string codigoBuscado;
+            cout << "\nIngrese el codigo alfanumerico del cliente a buscar: ";
+            getline(cin,codigoBuscado);
+
+            // Ejecucion de busqueda pasando el ID entero corregido
+            int comparacionIterativa = 0; 
+			bool posicion = buscarClientePorCodigo(codigoBuscado, tempBusqueda, c, comparacionIterativa);
+			if(buscarClientePorCodigo(codigoBuscado,tempBusqueda,c, comparacionIterativa)){
+                cout << "\n===CLIENTE ENCONTRADO===" << endl;
+                mostrarCorporacion(c);
+            } else {
+                cout << "\nCliente no encontrado en esta seccion.\n";
+            }
+            pausa();
 			break;
-        }
+		}
 
         //===Intercalacion===
-        case 7: {
+        case 8: {
             vector<Corporacion> finalizados;
             vector<Corporacion> pendientes;
             vector<Corporacion> resultadoUnificado;
@@ -269,14 +330,14 @@ void opcionesMenu(){
             cargarCorporacion("finalizado.csv", finalizados);
             cargarCorporacion("pendiente.csv", pendientes);
 
-            ReporteOrdenacion repFin = ordenarPorBurbujaOptimizado(finalizados);
-            ReporteOrdenacion repPen = ordenarPorBurbujaOptimizado(pendientes);
+            ReporteOrdenacion repFin = ordenarVector(finalizados);
+            ReporteOrdenacion repPen = ordenarVector(pendientes);
             
             // Acumulamos en las variables en el historial
             historialBurbuja.comparaciones += (repFin.comparaciones + repPen.comparaciones);
             historialBurbuja.intercambios += (repFin.intercambios + repPen.intercambios);
 
-            ReporteIntercalacion tempInter = intercalarVectoresContando(finalizados, pendientes, resultadoUnificado);
+            ReporteIntercalacion tempInter = intercalarClientes(finalizados, pendientes, resultadoUnificado);
             historialIntercalacion.comparaciones += tempInter.comparaciones;
             historialIntercalacion.inserciones += tempInter.inserciones;
 
@@ -294,7 +355,7 @@ void opcionesMenu(){
             break;
         }
         
-        case 8: {
+        case 9: {
             limpiar();
             cout << ">>> GENERANDO REPORTE EXPORTABLE EN FORMATO PDF <<<\n";
             generarReportePDFSimplificado();
@@ -303,7 +364,7 @@ void opcionesMenu(){
         }
 
         //===Salir===
-        case 9:
+        case 10:
         	limpiar();
             cout << "\n======================================================" << endl;
             cout << "          CERRANDO SISTEMA DE GESTION CORPORATIVA      " << endl;
