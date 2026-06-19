@@ -5,7 +5,9 @@
 #include "archivos.h"
 using namespace std;
 
-//=========Leer una linea del csv=========
+//Proposito: Extrae y parsea una línea de texto CSV asignándola a una estructura.
+//Parametro: archivo - Flujo de lectura abierto, c - Objeto destino.
+//Retorno: true si la lectura fue exitosa, false si llegó al final del archivo.
 bool leerCorporacion(ifstream &archivo, Corporacion &c) {
     string linea;
     if (!getline(archivo, linea)) {
@@ -35,7 +37,7 @@ bool leerCorporacion(ifstream &archivo, Corporacion &c) {
     conversionPrecio >> c.precio;
     
     stringstream conversionFecha(fechaStr);
-    conversionPrecio >> c.fecha;
+    conversionFecha >> c.fecha;
     
     // Evaluamos el estado del proyecto
     if (acabadoStr == "true" || acabadoStr == "1") {
@@ -47,7 +49,9 @@ bool leerCorporacion(ifstream &archivo, Corporacion &c) {
     return true;
 }
 
-//===Cargar los Clientes del csv===
+//Proposito: Vuelca dinámicamente todo el contenido de un archivo CSV en un vector.
+//Parametro: nombreArchivo - Ruta del archivo, corporaciones - Vector destino.
+//Retorno: Ninguno.
 void cargarCorporacion(const string &nombreArchivo, vector<Corporacion> &corporaciones){
 	ifstream archivo(nombreArchivo.c_str());
 	
@@ -62,7 +66,9 @@ void cargarCorporacion(const string &nombreArchivo, vector<Corporacion> &corpora
 	archivo.close();
 }
 
-//===Guardar los Clientes en CSB===
+//Proposito: Sobrescribe un archivo CSV persistiendo los datos contenidos en el vector.
+//Parametro: nombreArchivo - Ruta destino, corporaciones - Vector de origen constante.
+//Retorno: Ninguno.
 void guardarCorporacion(const string &nombreArchivo, const vector<Corporacion> &corporaciones){
 	ofstream archivo(nombreArchivo.c_str());
 	if(!archivo){
@@ -85,7 +91,9 @@ void guardarCorporacion(const string &nombreArchivo, const vector<Corporacion> &
 	archivo.close();
 }
 
-//===Separacion de datos por acabado===
+//Proposito: Discrimina y exporta los registros en dos archivos CSV según su estado finalizado/pendiente.
+//Parametro: corporaciones - Vector fuente general de datos.
+//Retorno: Ninguno.
 void separarYGuardarPorEstado(const vector<Corporacion> &corporaciones){
     ofstream archivoFinalizados("finalizado.csv");
     ofstream archivoPendientes("pendiente.csv");
