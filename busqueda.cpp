@@ -4,7 +4,9 @@
 #include "busqueda.h"
 using namespace std;
 
-// === Búsqueda Binaria Recursiva ===
+//Proposito: Realiza una búsqueda binaria recursiva por código de cliente.
+//Parametro: corporaciones - Vector ordenado, inicio/fin - Rangos, codigoBuscado, comparacion/llamada - Métricas.
+//Retorno: Posición entera del cliente encontrado, o -1 si no existe.
 int busquedaBinariaCorporacion(const vector<Corporacion> &corporaciones,
                                int inicio,
                                int fin, 
@@ -40,7 +42,9 @@ int busquedaBinariaCorporacion(const vector<Corporacion> &corporaciones,
     return -1;    
 }
 
-// === Búsqueda Secuencial / Iterativa ===
+//Proposito: Realiza una búsqueda secuencial por código de cliente.
+//Parametro: codigoBuscado, corporaciones - Vector de origen, c - Estructura destino, comparacion - Contador.
+//Retorno: true si el cliente fue hallado, false en caso contrario.
 bool buscarClientePorCodigo(string codigoBuscado, const vector<Corporacion> &corporaciones, Corporacion &c, int &comparacion) {
     for (size_t i = 0; i < corporaciones.size(); i++) {
         comparacion++;
@@ -52,7 +56,9 @@ bool buscarClientePorCodigo(string codigoBuscado, const vector<Corporacion> &cor
     return false;
 }
 
-// === Búsqueda secuencial para verificar si el código ya existe (Validación de duplicados) ===
+//Proposito: Verifica de forma lineal si un código ya existe para evitar duplicados.
+//Parametro: codigoBuscado, corporaciones - Vector con registros actuales.
+//Retorno: true si el código ya está registrado, false si está disponible.
 bool existeCodigo(string codigoBuscado, const vector<Corporacion> &corporaciones) {
     for (size_t i = 0; i < corporaciones.size(); i++) {
         if (corporaciones[i].codigo == codigoBuscado) {
@@ -62,7 +68,9 @@ bool existeCodigo(string codigoBuscado, const vector<Corporacion> &corporaciones
     return false;
 }
 
-// === Ordenamiento burbuja exclusivo por CÓDIGO para la Búsqueda Binaria ===
+//Proposito: Ordena temporalmente el vector por código para habilitar la Búsqueda Binaria.
+//Parametro: vectorTemporal - Referencia al vector que será reordenado.
+//Retorno: Ninguno.
 void ordenarPorCodigoParaBusqueda(vector<Corporacion> &vectorTemporal) {
     if (vectorTemporal.empty()) return;
     size_t n = vectorTemporal.size();
