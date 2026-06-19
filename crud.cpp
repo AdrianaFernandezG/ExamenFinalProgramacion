@@ -6,7 +6,9 @@
 #include "corporacion.h"
 using namespace std;
 
-//===Crear Vector===
+//Proposito: Agrega de forma interactiva una nueva estructura Corporacion al final del vector.
+//Parametro: corporaciones - Vector destino modificado por referencia.
+//Retorno: Ninguno.
 void crearCorporacion(vector<Corporacion> &corporaciones){
 	Corporacion c;
 	string comparacodigo;
@@ -42,7 +44,9 @@ void crearCorporacion(vector<Corporacion> &corporaciones){
 	cout<<"El cliente ha sido registrado correctamente"<<endl;
 }
 
-//===Modificar Informacion del Cliente===
+//Proposito: Modifica en memoria los atributos de un registro buscando por su ID numérico.
+//Parametro: corporaciones - Vector fuente modificado por referencia.
+//Retorno: Ninguno.
 void modificarCorporacion(vector<Corporacion> &corporaciones) { 
     int idBuscado;
     cout << "Ingrese ID del cliente a modificar: ";
@@ -76,7 +80,9 @@ void modificarCorporacion(vector<Corporacion> &corporaciones) {
     cout << "\nCliente no encontrado\n";
 }
 
-//===Eliminar Informacion del Cliente===
+//Propósito: Suprime de forma física un registro del vector desplazando las posiciones.
+//Parámetro: corporaciones - Vector modificado por referencia.
+//Retorno: Ninguno.
 void eliminarCorporacion(vector<Corporacion> &corporaciones){
 	int idBuscado;
 	cout << "Ingrese ID del cliente a modificar: ";
