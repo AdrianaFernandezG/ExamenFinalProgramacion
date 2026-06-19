@@ -25,7 +25,6 @@ void mostrarVectorCorporaciones(const vector<Corporacion> &corporaciones) {
         cout << "\nNo existen registros en esta lista.\n"; // Control si no hay datos
         return;
     }
-        return;
     
     cout << "\n======================================================" << endl;
     for (size_t i = 0; i < corporaciones.size(); i++) {
