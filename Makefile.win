@@ -1,0 +1,52 @@
+# Project: SistemaGestionIdentidad
+# Makefile created by Embarcadero Dev-C++ 6.3
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = archivos.o main.o vectores.o utilidades.o busqueda.o intercalacion.o crud.o ordenacion.o pdf.o
+LINKOBJ  = archivos.o main.o vectores.o utilidades.o busqueda.o intercalacion.o crud.o ordenacion.o pdf.o
+LIBS     = -L"C:/Users/ADRIANA/Documents/aplicaciones/Útiles/dev c++/Dev-Cpp/TDM-GCC-64/lib" -L"C:/Users/ADRIANA/Documents/aplicaciones/Útiles/dev c++/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -static-libgcc
+INCS     = -I"C:/Users/ADRIANA/Documents/aplicaciones/Útiles/dev c++/Dev-Cpp/TDM-GCC-64/include" -I"C:/Users/ADRIANA/Documents/aplicaciones/Útiles/dev c++/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Users/ADRIANA/Documents/aplicaciones/Útiles/dev c++/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include"
+CXXINCS  = -I"C:/Users/ADRIANA/Documents/aplicaciones/Útiles/dev c++/Dev-Cpp/TDM-GCC-64/include" -I"C:/Users/ADRIANA/Documents/aplicaciones/Útiles/dev c++/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Users/ADRIANA/Documents/aplicaciones/Útiles/dev c++/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Users/ADRIANA/Documents/aplicaciones/Útiles/dev c++/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++"
+BIN      = SistemaGestionIdentidad.exe
+CXXFLAGS = $(CXXINCS) -std=gnu++11
+CFLAGS   = $(INCS) -std=gnu++11
+DEL      = C:\Users\ADRIANA\Documents\aplicaciones\Útiles\dev c++\Dev-Cpp\devcpp.exe INTERNAL_DEL
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${DEL} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+archivos.o: archivos.cpp
+	$(CPP) -c archivos.cpp -o archivos.o $(CXXFLAGS)
+
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+vectores.o: vectores.cpp
+	$(CPP) -c vectores.cpp -o vectores.o $(CXXFLAGS)
+
+utilidades.o: utilidades.cpp
+	$(CPP) -c utilidades.cpp -o utilidades.o $(CXXFLAGS)
+
+busqueda.o: busqueda.cpp
+	$(CPP) -c busqueda.cpp -o busqueda.o $(CXXFLAGS)
+
+intercalacion.o: intercalacion.cpp
+	$(CPP) -c intercalacion.cpp -o intercalacion.o $(CXXFLAGS)
+
+crud.o: crud.cpp
+	$(CPP) -c crud.cpp -o crud.o $(CXXFLAGS)
+
+ordenacion.o: ordenacion.cpp
+	$(CPP) -c ordenacion.cpp -o ordenacion.o $(CXXFLAGS)
+
+pdf.o: pdf.cpp
+	$(CPP) -c pdf.cpp -o pdf.o $(CXXFLAGS)
