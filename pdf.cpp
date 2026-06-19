@@ -8,6 +8,9 @@
 #include "archivos.h"
 using namespace std;
 
+//Proposito: Genera un reporte formateado guardándolo con extensión .pdf.
+//Parametro: Ninguno.
+//Retorno: Ninguno.
 void generarReportePDFSimplificado() {
     vector<Corporacion> datosReporte;
     
