@@ -34,4 +34,3 @@ ReporteOrdenacion ordenarVector(vector<Corporacion> &corporaciones){
     }
     return rep; // Retorno multiple
 }
-
