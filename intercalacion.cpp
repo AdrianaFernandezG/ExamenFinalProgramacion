@@ -3,9 +3,11 @@
 #include "intercalacion.h"
 using namespace std;
 
-// ===Intercalacion de Dos Vectores Ordenados===
-ReporteIntercalacion intercalarClientes(const vector<Corporacion> &finalizado, 
-                                        const vector<Corporacion> &pendiente, 
+//Proposito: Combina dos vectores ordenados en un tercer vector ordenado por fecha.
+//Parametro: finalizado - Vector fuente 1, pendiente - Vector fuente 2, resultado - Vector destino.
+//Retorno: Estructura ReporteIntercalacion con métricas de rendimiento cargadas.
+ReporteIntercalacion intercalarClientes(const vector<Corporacion> &v1, 
+                                        const vector<Corporacion> &v2, 
                                           vector<Corporacion> &resultado){
 	ReporteIntercalacion rep;
 	    rep.comparaciones = 0;
